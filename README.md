@@ -359,7 +359,6 @@ The promocode package contains the following files :
 - Use const text to match reasons in test. More scalable if exchange protocol change is made. We see that tests become invalid and we made the change in integration test to match if the new protocol is respected.
 - Create useful functions to create more secure tests without typo mistake problem.
 - Create a package for each binary in the same repository and prepare demo benchmark to be used quickly.
-- Use of cargo clippy to refactor some part of code.
 ```
 PACKAGE:
 
@@ -372,6 +371,7 @@ load-testing-add-promocode-demo -> already configured to load testing the add of
 load-testing-is-valid-promocode-demo -> already configured to load testing the is-valid-promocode request
 ```
 - Test benchmark on more powerfull computer.
+- Use of cargo clippy to refactor some part of code.
 - [TODO] Refactor code to use closure and bests practices in rust.
 - [TODO] Prepare more complex benchmarck according to the specifications.
 
