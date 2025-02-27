@@ -1,0 +1,13 @@
+{
+  "name": "Promocode-test_add_promocode_with_age_eq_invalid",
+    "advantage": {
+      "percent": 10
+    },
+    "restrictions": [
+      {
+	"age": {
+	  "eq": -5
+	}
+      }
+    ]
+}

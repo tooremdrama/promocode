@@ -1,0 +1,14 @@
+{
+  "name": "test_is_valid_promocode_age_invalid",
+  "advantage": {
+    "percent": 10
+  },
+  "restrictions": [
+    {
+      "age": {
+        "eq": 9
+      }
+    }
+  ]
+}
+

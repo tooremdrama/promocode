@@ -1,0 +1,38 @@
+{
+  "name": "test_add_promocode_depth_complex_level_2",
+    "advantage": { "percent": 4 },
+    "restrictions": [
+      { "age": { "eq": 5 } },
+      { "age": { "eq": 4 } },
+      { "weather": { "is": "Snow", "temp": { "gt": 0 } } },
+      {
+	"or":
+	[
+	  { "age": { "eq": 3 } },
+	  { "age": { "eq": 4 } },
+	  { "age": { "eq": 5 } },
+	  {
+	    "or": [{ "age": { "eq": 3 } },
+	      { "age": { "eq": 4 } },
+	      { "age": { "eq": 5 } }
+	    ]
+	  }
+
+	]
+      },
+      {
+	"and": [
+	  { "age": { "eq": 3 } },
+	  { "age": { "eq": 4 } },
+	  { "age": { "eq": 5 } },
+	  {
+	    "or": [
+	      { "age": { "eq": 3 } },
+	      { "age": { "eq": 4 } },
+	      { "age": { "eq": 5 } }
+	    ]
+	  }
+	]
+      }
+    ]
+}

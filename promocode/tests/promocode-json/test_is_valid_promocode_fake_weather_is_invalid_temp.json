@@ -1,0 +1,14 @@
+{
+  "name": "test_is_valid_promocode_fake_weather_is_invalid_temp",
+    "advantage": { "percent": 20 },
+    "restrictions": [
+      {
+        "weather": {
+	  "is": "Rain",
+	  "temp": {
+	    "gt": 37.0
+	  }
+	}
+      }
+    ]
+}

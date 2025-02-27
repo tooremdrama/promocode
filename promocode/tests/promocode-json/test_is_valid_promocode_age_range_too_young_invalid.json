@@ -1,0 +1,12 @@
+{
+  "name": "test_is_valid_promocode_age_range_too_young_invalid",
+  "advantage": { "percent": 20 },
+  "restrictions": [
+	  {
+              "age": {
+                "lt": 30,
+                "gt": 15
+              }
+            }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Promocode-test_add_promocode_with_weather_town_invalid",
+    "advantage": {
+      "percent": 39
+    },
+    "restrictions": [
+      {
+	"weather" : {
+	  "is": "abcdefgthidjimjgimog",
+	  "temp": {
+	    "gt": -1000
+	  }
+	}
+      }
+    ]
+}

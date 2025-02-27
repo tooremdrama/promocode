@@ -1,0 +1,6 @@
+[workspace]
+members = ["promocode", "load-testing-add-promocode-demo", "load-testing-is-valid-promocode-demo", "load-testing"]
+resolver = "2"
+
+[profile.release]
+opt-level = 3

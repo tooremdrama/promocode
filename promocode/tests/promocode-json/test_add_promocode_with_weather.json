@@ -1,0 +1,16 @@
+{
+  "name": "Promocode-test_add_promocode_with_weather",
+    "advantage": {
+      "percent": 39
+    },
+    "restrictions": [
+      {
+	"weather" : {
+	  "is": "Clouds",
+	  "temp": {
+	    "gt": -1000
+	  }
+	}
+      }
+    ]
+}

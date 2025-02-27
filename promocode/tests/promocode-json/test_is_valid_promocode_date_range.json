@@ -1,0 +1,12 @@
+{
+  "name": "test_is_valid_promocode_date_range",
+    "advantage": { "percent": 20 },
+    "restrictions": [
+      {
+	"date": {
+	  "after": "2019-01-01",
+	  "before": "2029-06-30"
+	}
+      }
+    ]
+}

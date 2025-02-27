@@ -1,0 +1,14 @@
+{
+  "name": "Promocode-test_add_promocode_with_date_range_invalid_format",
+    "advantage": {
+      "percent": 20
+    },
+    "restrictions": [
+      {
+	"date": {
+	  "after": "blabla2023-01-01",
+	  "before": "blibli2029-01-01"
+	}
+      }
+    ]
+}

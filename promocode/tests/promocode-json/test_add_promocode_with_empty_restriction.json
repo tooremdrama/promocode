@@ -1,0 +1,9 @@
+{
+  "name": "Promocode-test_add_promocode_with_empty_restriction",
+    "advantage": {
+      "percent": 10
+    },
+    "restrictions": [
+    ]
+}
+

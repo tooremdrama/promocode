@@ -1,0 +1,29 @@
+{
+  "name": "Promocode-test_add_promocode_with_three_restriction_in_or",
+    "advantage": {
+      "percent": 5
+    },
+    "restrictions": [
+
+      {
+	"or": [
+	  {
+	    "age": {
+	      "eq": 20
+	    }
+	  },
+	  {
+	    "age": {
+	      "eq": 20
+	    }
+	  },
+	  {
+	    "date": {
+	      "after": "2023-01-01",
+	      "before": "2029-01-01"
+	    }
+	  }
+	]
+      }
+    ]
+}
