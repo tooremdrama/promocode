@@ -2,9 +2,19 @@ use poem_openapi::{Object, payload::Json};
 use crate::promocode::PromoCode;
 use crate::promocode::Advantage;
 
-/// Status
-const ACCEPTED : &str = "accepted";
-const DENIED : &str = "denied";
+enum RequestStatut {
+    Accepted,
+    Denied
+}
+
+impl RequestStatut {
+    fn as_str(&self) -> &'static str {
+        match self {
+            RequestStatut::Accepted => "accepted",
+            RequestStatut::Denied => "denied"
+        }
+    }
+}
 
 #[derive(Object)]
 pub struct PromoCodeRequest {
@@ -38,7 +48,7 @@ impl PromoCodeValidResponse<> {
         let promo_name = promocode_req.promocode_name.clone();
         PromoCodeValidResponse {
             promocode_name: promo_name.clone(),
-            status: ACCEPTED.to_string(),
+            status: RequestStatut::Accepted.as_str().to_string(),
             advantage: PromoCode::get_advantage(&promo_name),
         }
     }
@@ -48,7 +58,7 @@ impl PromoCodeInvalidResponse {
     pub fn new(promocode_req: &Json<PromoCodeRequest>, reasons: Vec<String>) -> Self {
         PromoCodeInvalidResponse {
             promocode_name: promocode_req.promocode_name.clone(),
-            status: DENIED.to_string(),
+            status: RequestStatut::Denied.as_str().to_string(),
             reasons,
         }
     }

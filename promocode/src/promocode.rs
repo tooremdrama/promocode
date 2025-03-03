@@ -4,14 +4,27 @@ use crate::{extern_api};//, database::*};
 use chrono::NaiveDate;
 use serde::{Serialize, Deserialize};
 
-const MSG_PROMOCODE_NOT_EXISTS : &str = "This promo code doesn't exist.";
-const MSG_RESTRICTION_DATE_RANGE_INVALID : &str = "Invalid date restriction. Must be : after date <= today date <= before date.";
-const MSG_RESTRICTION_AGE_RANGE_INVALID : &str = "Invalid age restriction. Must be : lt <= age <= gt.";
-const MSG_RESTRICTION_AGE_INVALID : &str = "Invalid age restriction. Must be equal to eq in promocode.";
-const MSG_RESTRICTION_METEO_INVALID: &str = "Invalid meteo restriction.";
-const MSG_RESTRICTION_TOWN_INVALID: &str = "Invalid town.";
+enum MsgRestrictionError {
+    MsgPromocodeNotExists,
+    MsgRestrictionDateRangeInvalid,
+    MsgRestrictionAgeRangeInvalid,
+    MsgRestrictionAgeInvalid,
+    MsgRestrictionMeteoInvalid,
+    MsgRestrictionTownInvalid,
+}
 
-
+impl MsgRestrictionError {
+    fn as_str(&self) -> &'static str {
+        match self {
+            MsgRestrictionError::MsgPromocodeNotExists => "This promo code doesn't exist.",
+            MsgRestrictionError::MsgRestrictionDateRangeInvalid => "Invalid date restriction. Must be : after date <= today date <= before date.",
+            MsgRestrictionError::MsgRestrictionAgeRangeInvalid => "Invalid age restriction. Must be : lt <= age <= gt.",
+            MsgRestrictionError::MsgRestrictionAgeInvalid => "Invalid age restriction. Must be equal to eq in promocode.",
+            MsgRestrictionError::MsgRestrictionMeteoInvalid => "Invalid meteo restriction.",
+            MsgRestrictionError::MsgRestrictionTownInvalid => "Invalid town."
+        }
+    }
+}
 
 #[derive(Object, Debug, Serialize, Deserialize)]
 pub struct PromoCode {
@@ -117,7 +130,7 @@ impl PromoCode {
     /// Return false if promo code is invalid and the reasons why in Vec<String>
     pub async fn is_promocode_valid_for_request(request: &PromoCodeRequest) -> (bool, Vec<String>) {
         match PromoCode::database_get(request.promocode_name.as_str()) {
-            None => { (false, vec![MSG_PROMOCODE_NOT_EXISTS.to_string()]) },
+            None => { (false, vec![MsgRestrictionError::MsgPromocodeNotExists.as_str().to_string()]) },
             Some(promocode) => {
                 let mut reasons : Vec<String>= Vec::new();
                 (promocode.is_valid(request, &mut reasons).await, reasons)
@@ -183,7 +196,7 @@ impl Validator for PromoCode {
     async fn is_valid(&self, request: &PromoCodeRequest, reasons: &mut Vec<String>) -> bool {
         match PromoCode::database_get(request.promocode_name.as_str()) {
             None => { 
-                reasons.push(MSG_PROMOCODE_NOT_EXISTS.to_string());
+                reasons.push(MsgRestrictionError::MsgPromocodeNotExists.as_str().to_string());
                 false
             },
             Some(_) => {
@@ -241,7 +254,7 @@ impl Validator for AgeRestrictionEqual {
         if request.arguments.age == self.eq {
             return true;
         }
-        reasons.push(MSG_RESTRICTION_AGE_INVALID.to_string());
+        reasons.push(MsgRestrictionError::MsgRestrictionAgeInvalid.as_str().to_string());
         false
     }
 
@@ -256,7 +269,7 @@ impl Validator for AgeRestrictionRange {
         if self.gt <= request.arguments.age && request.arguments.age <= self.lt {
             return true;
         }
-        reasons.push(MSG_RESTRICTION_AGE_RANGE_INVALID.to_string());
+        reasons.push(MsgRestrictionError::MsgRestrictionAgeRangeInvalid.as_str().to_string());
         false
     }
 }
@@ -295,7 +308,7 @@ impl Validator for Date {
         if is_valid_date(self.after.as_str(), self.before.as_str()) {
             return true;
         }
-        reasons.push(MSG_RESTRICTION_DATE_RANGE_INVALID.to_string());
+        reasons.push(MsgRestrictionError::MsgRestrictionDateRangeInvalid.as_str().to_string());
         false
     }
 
@@ -348,14 +361,14 @@ impl Validator for WeatherTemp {
         let (i, t) = extern_api::get_meteo(request.arguments.town.as_str()).await;
 
         if i.is_empty() || request.arguments.town.is_empty() { 
-            reasons.push(MSG_RESTRICTION_TOWN_INVALID.to_string());
+            reasons.push(MsgRestrictionError::MsgRestrictionTownInvalid.as_str().to_string());
             return false; 
         }
 
         if self.is == i &&  self.temp.gt < t {
             return true;
         }
-        reasons.push(MSG_RESTRICTION_METEO_INVALID.to_string());
+        reasons.push(MsgRestrictionError::MsgRestrictionMeteoInvalid.as_str().to_string());
         false
     }
 }
